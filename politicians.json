@@ -1,0 +1,262 @@
+[
+    {
+        "id": 1,
+        "first_name": "Dragos",
+        "last_name": "Tudorache",
+        "birth_year": 1972,
+        "country": "Romania",
+        "current_office": "Member of the European Parliament",
+        "is_active": 1,
+        "education_level": "Master of Laws",
+        "official_website": "https://dragostudorache.ro",
+        "party_affiliation": {
+            "party_name": "Renew Europe",
+            "ideology": "Pro-Europeanism / Tech Regulation"
+        },
+        "terms_in_office": [
+            {
+                "role": "Member of the Romanian Parliament",
+                "start_year": 2016,
+                "end_year": 2019
+            },
+            {
+                "role": "Member of the European Parliament",
+                "start_year": 2019,
+                "end_year": null
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "first_name": "Brando",
+        "last_name": "Benifei",
+        "birth_year": 1986,
+        "country": "Italy",
+        "current_office": "Member of the European Parliament",
+        "is_active": 1,
+        "education_level": "Degree in Political Science",
+        "official_website": "https://brandobenifei.it",
+        "party_affiliation": {
+            "party_name": "Democratic Party",
+            "ideology": "Social Democracy / AI Act Co-Author"
+        },
+        "terms_in_office": [
+            {
+                "role": "Member of the European Parliament",
+                "start_year": 2014,
+                "end_year": null
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "first_name": "Josh",
+        "last_name": "Hawley",
+        "birth_year": 1979,
+        "country": "United States",
+        "current_office": "US Senator",
+        "is_active": 1,
+        "education_level": "Juris Doctor (Law)",
+        "official_website": "https://hawley.senate.gov",
+        "party_affiliation": {
+            "party_name": "Republican Party",
+            "ideology": "Conservatism / Anti-AI Liability"
+        },
+        "terms_in_office": [
+            {
+                "role": "Attorney General of Missouri",
+                "start_year": 2017,
+                "end_year": 2019
+            },
+            {
+                "role": "US Senator",
+                "start_year": 2019,
+                "end_year": null
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "first_name": "Alexandra",
+        "last_name": "Geese",
+        "birth_year": 1966,
+        "country": "Germany",
+        "current_office": "Member of the European Parliament",
+        "is_active": 1,
+        "education_level": "Master of Arts",
+        "official_website": "https://alexandra-geese.de",
+        "party_affiliation": {
+            "party_name": "Alliance 90/The Greens",
+            "ideology": "Green Politics / Big Tech Oversight"
+        },
+        "terms_in_office": [
+            {
+                "role": "Member of the European Parliament",
+                "start_year": 2019,
+                "end_year": null
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "first_name": "Chris",
+        "last_name": "Murphy",
+        "birth_year": 1973,
+        "country": "United States",
+        "current_office": "US Senator",
+        "is_active": 1,
+        "education_level": "Juris Doctor (Law)",
+        "official_website": "https://murphy.senate.gov",
+        "party_affiliation": {
+            "party_name": "Democratic Party",
+            "ideology": "Liberalism / AI Labor Protections"
+        },
+        "terms_in_office": [
+            {
+                "role": "US House Representative",
+                "start_year": 2007,
+                "end_year": 2013
+            },
+            {
+                "role": "US Senator",
+                "start_year": 2013,
+                "end_year": null
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "first_name": "Chloe",
+        "last_name": "Swarbrick",
+        "birth_year": 1994,
+        "country": "New Zealand",
+        "current_office": "Member of Parliament",
+        "is_active": 1,
+        "education_level": "Bachelor of Arts & Laws",
+        "official_website": "https://chloeswarbrick.co.nz",
+        "party_affiliation": {
+            "party_name": "Green Party",
+            "ideology": "Progressivism / Automation Policy"
+        },
+        "terms_in_office": [
+            {
+                "role": "Auckland City Councillor",
+                "start_year": 2016,
+                "end_year": 2020
+            },
+            {
+                "role": "Member of Parliament",
+                "start_year": 2017,
+                "end_year": null
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "first_name": "Yannick",
+        "last_name": "Jadot",
+        "birth_year": 1967,
+        "country": "France",
+        "current_office": "Senator",
+        "is_active": 1,
+        "education_level": "Master in Economics",
+        "official_website": "https://yannickjadot.fr",
+        "party_affiliation": {
+            "party_name": "The Ecologists",
+            "ideology": "Green Politics / Copyright Enforcement"
+        },
+        "terms_in_office": [
+            {
+                "role": "Member of the European Parliament",
+                "start_year": 2019,
+                "end_year": 2023
+            },
+            {
+                "role": "French Senator",
+                "start_year": 2023,
+                "end_year": null
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "first_name": "Anna",
+        "last_name": "Cavazzini",
+        "birth_year": 1982,
+        "country": "Germany",
+        "current_office": "Member of the European Parliament",
+        "is_active": 1,
+        "education_level": "Master of Political Science",
+        "official_website": "https://annacavazzini.eu",
+        "party_affiliation": {
+            "party_name": "Alliance 90/The Greens",
+            "ideology": "European Federalism / Consumer Rights"
+        },
+        "terms_in_office": [
+            {
+                "role": "Member of the European Parliament",
+                "start_year": 2019,
+                "end_year": null
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "first_name": "Marsha",
+        "last_name": "Blackburn",
+        "birth_year": 1952,
+        "country": "United States",
+        "current_office": "US Senator",
+        "is_active": 1,
+        "education_level": "Bachelor of Science",
+        "official_website": "https://blackburn.senate.gov",
+        "party_affiliation": {
+            "party_name": "Republican Party",
+            "ideology": "Conservatism / NO FAKES Act"
+        },
+        "terms_in_office": [
+            {
+                "role": "Tennessee State Senate",
+                "start_year": 1999,
+                "end_year": 2003
+            },
+            {
+                "role": "US House Representative",
+                "start_year": 2003,
+                "end_year": 2019
+            },
+            {
+                "role": "US Senator",
+                "start_year": 2019,
+                "end_year": null
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "first_name": "Paul",
+        "last_name": "Tang",
+        "birth_year": 1962,
+        "country": "Netherlands",
+        "current_office": "Former Member of the European Parliament",
+        "is_active": 0,
+        "education_level": "Master of Economics",
+        "official_website": "https://paultang.nl",
+        "party_affiliation": {
+            "party_name": "Labour Party",
+            "ideology": "Social Democracy / Digital Tax & Ethics"
+        },
+        "terms_in_office": [
+            {
+                "role": "Member of Dutch Parliament",
+                "start_year": 2010,
+                "end_year": 2019
+            },
+            {
+                "role": "Member of the European Parliament",
+                "start_year": 2019,
+                "end_year": 2024
+            }
+        ]
+    }
+]
