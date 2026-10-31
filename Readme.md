@@ -31,7 +31,7 @@ The database utilizes a relational model with two core entities linked (`politic
 
 ### 2. `terms_in_office` (Child Entity)
 - `id` (INTEGER, Primary Key, Auto Increment) - unique identifier for the terms
-- `politician_id` (INTEGER, Foreign Key referencing `politicians.id`)
-- `role` (TEXT)
-- `start_year` (INTEGER)
-- `end_year` (INTEGER - NULL if currently serving/ ATM)
+- `politician_id` (INTEGER, Foreign Key referencing `politicians.id`) the same as in parent entity
+- `role` (TEXT) what was the title of the office interchangable with title semantically
+- `start_year` (INTEGER) of term
+- `end_year` (INTEGER - NULL if currently serving/ ATM) of term
