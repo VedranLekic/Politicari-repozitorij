@@ -26,12 +26,12 @@ The database utilizes a relational model with two core entities linked (`politic
 - `is_active` (INTEGER - Boolean 1/0) - enum to say whether one is active: 1-active 0-inactive
 - `education_level` (TEXT)
 - `official_website` (TEXT)
-- `party_name` (TEXT)
+- `party_name` (TEXT) - refers to the current political party non term related
 - `ideology` (TEXT) - with respect to AI and general
 
 ### 2. `terms_in_office` (Child Entity)
 - `id` (INTEGER, Primary Key, Auto Increment) - unique identifier for the terms
-- `politician_id` (INTEGER, Foreign Key referencing `politicians.id`) the same as in parent entity
-- `role` (TEXT) what was the title of the office interchangable with title semantically
-- `start_year` (INTEGER) of term
-- `end_year` (INTEGER - NULL if currently serving/ ATM) of term
+- `politician_id` (INTEGER, Foreign Key referencing `politicians.id`) - the same as in parent entity
+- `role` (TEXT) - the title of the office interchangable with title semantically
+- `start_year` (INTEGER) - of term
+- `end_year` (INTEGER - NULL if currently serving/ ATM)-  of term
