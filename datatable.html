@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politicians – interaktivna tablica</title>
+    <style>
+        :root {
+            --primary: #1a5276;
+            --primary-light: #2e86c1;
+            --accent: #eaf2f8;
+            --text: #1c2833;
+            --muted: #5d6d7e;
+            --border: #d5dbdb;
+            --bg: #f8f9fa;
+            --green: #27ae60;
+            --red: #c0392b;
+            --card-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        * { box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; line-height: 1.6; color: var(--text); background: var(--bg); }
+        .site-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+        .site-header .inner { max-width: 1400px; margin: 0 auto; padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+        .brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; color: var(--primary); text-decoration: none; font-size: 1.1rem; }
+        .brand .logo { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; }
+        .nav a { color: var(--primary); text-decoration: none; font-size: 0.9rem; padding: 0.4rem 0.8rem; border-radius: 6px; }
+        .nav a:hover { background: var(--accent); }
+        main { max-width: 1400px; margin: 1.5rem auto 3rem; padding: 0 1.5rem; }
+        .page-title { color: var(--primary); margin: 0 0 0.3rem; font-size: 1.6rem; }
+        .page-subtitle { color: var(--muted); margin: 0 0 1.5rem; font-size: 0.95rem; }
+        .card { background: white; border-radius: 12px; padding: 1.3rem 1.5rem; box-shadow: var(--card-shadow); margin-bottom: 1.2rem; }
+        .filter-form { display: flex; gap: 0.7rem; flex-wrap: wrap; align-items: center; }
+        .filter-form input[type="text"], .filter-form select { padding: 0.6rem 0.9rem; font-size: 0.95rem; border: 1px solid var(--border); border-radius: 8px; background: white; color: var(--text); transition: border-color 0.15s, box-shadow 0.15s; }
+        .filter-form input[type="text"]:focus, .filter-form select:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(46,134,193,0.15); }
+        .filter-form input[type="text"] { flex: 1; min-width: 220px; }
+        .btn { padding: 0.6rem 1.1rem; font-size: 0.92rem; font-weight: 600; border-radius: 8px; border: 1px solid var(--border); background: white; color: var(--primary); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+        .btn:hover { background: var(--accent); border-color: var(--primary-light); }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; border: none; }
+        .btn-primary:hover { box-shadow: 0 4px 12px rgba(26,82,118,0.3); transform: translateY(-1px); }
+        .btn-ghost { background: transparent; }
+        .status { margin-left: auto; color: var(--muted); font-size: 0.88rem; background: var(--accent); padding: 0.35rem 0.8rem; border-radius: 999px; }
+        .toolbar { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.6rem; padding-top: 0.9rem; border-top: 1px solid var(--border); }
+        .toolbar .btn { font-size: 0.88rem; padding: 0.5rem 0.9rem; }
+        .table-section { margin-bottom: 2.5rem; }
+        .table-title { font-size: 1.2rem; color: var(--primary); margin: 0 0 1rem 0; padding-bottom: 0.4rem; border-bottom: 2px solid var(--accent); display: flex; justify-content: space-between; align-items: flex-end; }
+        .table-count { font-size: 0.9rem; color: var(--muted); font-weight: normal; }
+        .table-wrapper { background: white; border-radius: 12px; box-shadow: var(--card-shadow); overflow: hidden; }
+        .table-scroll { overflow-x: auto; max-height: 60vh; overflow-y: auto; }
+        table { border-collapse: collapse; width: 100%; font-size: 0.86rem; }
+        thead th { background: var(--primary); color: white; text-align: left; padding: 0.75rem 0.7rem; font-weight: 600; font-size: 0.82rem; position: sticky; top: 0; z-index: 2; white-space: nowrap; letter-spacing: 0.3px; text-transform: uppercase; }
+        #termsTable thead th { background: #117864; }
+        #actionsTable thead th { background: #7d3c98; }
+        #committeesTable thead th { background: #b03a2e; }
+        tbody td { padding: 0.6rem 0.7rem; border-bottom: 1px solid #eef1f3; vertical-align: top; }
+        tbody tr:hover { background: var(--accent); }
+        tbody tr:last-child td { border-bottom: none; }
+        td.num { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+        a.link { color: var(--primary-light); text-decoration: none; word-break: break-all; }
+        a.link:hover { text-decoration: underline; }
+        .badge { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; }
+        .badge-yes { background: #eafaf1; color: var(--green); }
+        .badge-no { background: #fdecea; color: var(--red); }
+        .badge-action { background: #f4ecf7; color: #7d3c98; }
+        .badge-committee { background: #fadbd8; color: #b03a2e; }
+        .terms-list { font-size: 0.82rem; color: var(--muted); }
+        .terms-list div { margin-bottom: 0.15rem; }
+        .terms-list div::before { content: "• "; color: var(--primary-light); }
+        .empty-row td { text-align: center; color: var(--muted); padding: 2.5rem 1rem !important; font-style: italic; }
+        footer { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
+        @media (max-width: 700px) { .status { margin-left: 0; width: 100%; text-align: center; } .filter-form input[type="text"] { min-width: 100%; } }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="inner">
+        <a class="brand" href="index.html"><span class="logo">P</span> Politicians</a>
+        <nav class="nav"><a href="index.html">← Početna</a></nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Interaktivna tablica</h1>
+    <p class="page-subtitle">Podaci se dohvaćaju iz baze. Tablice prikazuju političare, njihove mandate, zakonodavne akte i članstva u odborima.</p>
+
+    <div class="card">
+        <form class="filter-form" id="filterForm" onsubmit="return false;">
+            <input type="text" id="searchInput" placeholder="🔍  Pretraži po svim atributima...">
+            <select id="attributeSelect" aria-label="Odaberi atribut pretrage">
+                <option value="">Svi atributi (wildcard)</option>
+                <option value="first_name">Ime</option>
+                <option value="last_name">Prezime</option>
+                <option value="country">Država</option>
+                <option value="current_office">Trenutna dužnost</option>
+                <option value="education_level">Obrazovanje</option>
+                <option value="party_name">Stranka</option>
+                <option value="ideology">Ideologija</option>
+                <option value="terms_in_office">Mandati</option>
+                <option value="legislative_actions">Zakonodavni akti</option>
+                <option value="committee_memberships">Članstva u odborima</option>
+            </select>
+            <button type="button" class="btn btn-ghost" id="clearBtn">✕ Očisti</button>
+            <span class="status" id="status"></span>
+        </form>
+
+        <div class="toolbar">
+            <button class="btn btn-primary" id="exportCsvBtn">⬇ Preuzmi CSV (filtrirano)</button>
+            <button class="btn" id="exportJsonBtn">⬇ Preuzmi JSON (filtrirano)</button>
+        </div>
+    </div>
+
+    <div class="table-section">
+        <h2 class="table-title">Političari <span class="table-count" id="politiciansCount"></span></h2>
+        <div class="table-wrapper">
+            <div class="table-scroll">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th><th>Ime</th><th>Prezime</th><th>God.</th><th>Država</th>
+                            <th>Trenutna dužnost</th><th>Aktivan</th><th>Obrazovanje</th><th>Web</th>
+                            <th>Stranka</th><th>Ideologija</th><th>Mandati</th><th>Akcije</th><th>Odbori</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-section">
+        <h2 class="table-title">Mandati / Terms in Office <span class="table-count" id="termsCount"></span></h2>
+        <div class="table-wrapper">
+            <div class="table-scroll">
+                <table id="termsTable">
+                    <thead><tr><th>Političar ID</th><th>Političar</th><th>Dužnost (Role)</th><th>Početak</th><th>Kraj</th></tr></thead>
+                    <tbody id="termsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-section">
+        <h2 class="table-title">Zakonodavni akti / Legislative Actions <span class="table-count" id="actionsCount"></span></h2>
+        <div class="table-wrapper">
+            <div class="table-scroll">
+                <table id="actionsTable">
+                    <thead><tr><th>Političar ID</th><th>Političar</th><th>Naziv akta (Title)</th><th>Vrsta akcije</th><th>Godina</th><th>Status</th></tr></thead>
+                    <tbody id="actionsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-section">
+        <h2 class="table-title">Članstva u odborima / Committee Memberships <span class="table-count" id="committeesCount"></span></h2>
+        <div class="table-wrapper">
+            <div class="table-scroll">
+                <table id="committeesTable">
+                    <thead><tr><th>Političar ID</th><th>Političar</th><th>Naziv odbora (Committee)</th><th>Uloga (Role)</th><th>Početak</th><th>Kraj</th></tr></thead>
+                    <tbody id="committeesTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>© 2026 Vedran Lekić · MIT licenca</footer>
+
+<script>
+    const API_BASE = "http://localhost:5000";
+    let allData = [];
+    let filteredData = [];
+
+    const searchInput = document.getElementById("searchInput");
+    const attributeSelect = document.getElementById("attributeSelect");
+    const clearBtn = document.getElementById("clearBtn");
+    const statusSpan = document.getElementById("status");
+    
+    const tableBody = document.getElementById("tableBody");
+    const termsTableBody = document.getElementById("termsTableBody");
+    const actionsTableBody = document.getElementById("actionsTableBody");
+    const committeesTableBody = document.getElementById("committeesTableBody");
+    
+    const politiciansCount = document.getElementById("politiciansCount");
+    const termsCount = document.getElementById("termsCount");
+    const actionsCount = document.getElementById("actionsCount");
+    const committeesCount = document.getElementById("committeesCount");
+
+    async function loadData() {
+        statusSpan.textContent = "Učitavanje...";
+        try {
+            const res = await fetch(`${API_BASE}/api/politicians`);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            allData = await res.json();
+            applyFilter();
+        } catch (err) {
+            statusSpan.textContent = "⚠ Greška: " + err.message;
+            statusSpan.style.color = "#c0392b";
+        }
+    }
+
+    function getPartyField(row, field) { return row.party_affiliation?.[field] ?? ""; }
+
+    function formatTermsString(row) {
+        if (!Array.isArray(row.terms_in_office)) return "";
+        return row.terms_in_office.map(t => {
+            const end = t.end_year == null ? "sada" : t.end_year;
+            return `${t.role} (${t.start_year}–${end})`;
+        }).join("; ");
+    }
+
+    function formatActionsString(row) {
+        if (!Array.isArray(row.legislative_actions)) return "";
+        return row.legislative_actions.map(a => `${a.title} (${a.year}) - ${a.status}`).join("; ");
+    }
+
+    function formatCommitteesString(row) {
+        if (!Array.isArray(row.committee_memberships)) return "";
+        return row.committee_memberships.map(c => {
+            const end = c.end_year == null ? "sada" : c.end_year;
+            return `${c.committee_name} (${c.start_year}–${end})`;
+        }).join("; ");
+    }
+
+    function flattenForSearch(row) {
+        return [
+            row.id, row.first_name, row.last_name, row.birth_year, row.country, 
+            row.current_office, row.education_level, row.official_website,
+            getPartyField(row, "party_name"), getPartyField(row, "ideology"),
+            formatTermsString(row), formatActionsString(row), formatCommitteesString(row)
+        ].map(v => (v ?? "").toString().toLowerCase());
+    }
+
+    function applyFilter() {
+        const term = searchInput.value.trim().toLowerCase();
+        const attr = attributeSelect.value;
+
+        if (!term) {
+            filteredData = allData.slice();
+        } else if (attr) {
+            filteredData = allData.filter(row => {
+                let val = "";
+                if (attr === "party_name" || attr === "ideology") {
+                    val = getPartyField(row, attr);
+                } else if (attr === "terms_in_office") {
+                    val = formatTermsString(row);
+                } else if (attr === "legislative_actions") {
+                    val = formatActionsString(row);
+                } else if (attr === "committee_memberships") {
+                    val = formatCommitteesString(row);
+                } else {
+                    val = row[attr] ?? "";
+                }
+                return val.toString().toLowerCase().includes(term);
+            });
+        } else {
+            filteredData = allData.filter(row => flattenForSearch(row).some(v => v.includes(term)));
+        }
+        
+        renderTables();
+        statusSpan.textContent = `${filteredData.length} / ${allData.length} političara`;
+    }
+
+    function renderTables() {
+        renderPoliticiansTable();
+        renderTermsTable();
+        renderActionsTable();
+        renderCommitteesTable();
+    }
+
+    function renderPoliticiansTable() {
+        tableBody.innerHTML = "";
+        politiciansCount.textContent = `(${filteredData.length} zapisa)`;
+        if (filteredData.length === 0) {
+            tableBody.innerHTML = `<tr class="empty-row"><td colspan="14">Nema rezultata.</td></tr>`;
+            return;
+        }
+        const frag = document.createDocumentFragment();
+        for (const row of filteredData) {
+            const tr = document.createElement("tr");
+            tr.appendChild(td(row.id, "num"));
+            tr.appendChild(td(row.first_name));
+            tr.appendChild(td(row.last_name));
+            tr.appendChild(td(row.birth_year, "num"));
+            tr.appendChild(td(row.country));
+            tr.appendChild(td(row.current_office));
+
+            const activeTd = document.createElement("td");
+            const badge = document.createElement("span");
+            badge.className = "badge " + (row.is_active === 1 ? "badge-yes" : "badge-no");
+            badge.textContent = row.is_active === 1 ? "Da" : "Ne";
+            activeTd.appendChild(badge);
+            tr.appendChild(activeTd);
+
+            tr.appendChild(td(row.education_level));
+
+            const webTd = document.createElement("td");
+            if (row.official_website) {
+                const a = document.createElement("a");
+                a.className = "link"; a.href = row.official_website; a.target = "_blank"; a.rel = "noopener";
+                a.textContent = row.official_website.replace(/^https?:\/\//, "");
+                webTd.appendChild(a);
+            }
+            tr.appendChild(webTd);
+            tr.appendChild(td(getPartyField(row, "party_name")));
+            tr.appendChild(td(getPartyField(row, "ideology")));
+
+            const termsTd = document.createElement("td");
+            termsTd.className = "terms-list";
+            if (Array.isArray(row.terms_in_office)) {
+                row.terms_in_office.forEach(t => {
+                    const div = document.createElement("div");
+                    const end = t.end_year == null ? "sada" : t.end_year;
+                    div.textContent = `${t.role} (${t.start_year}–${end})`;
+                    termsTd.appendChild(div);
+                });
+            }
+            tr.appendChild(termsTd);
+
+            const actionsTd = document.createElement("td");
+            actionsTd.className = "terms-list";
+            if (Array.isArray(row.legislative_actions)) {
+                row.legislative_actions.forEach(a => {
+                    const div = document.createElement("div");
+                    div.textContent = `${a.title} (${a.year})`;
+                    actionsTd.appendChild(div);
+                });
+            }
+            tr.appendChild(actionsTd);
+
+            const commTd = document.createElement("td");
+            commTd.className = "terms-list";
+            if (Array.isArray(row.committee_memberships)) {
+                row.committee_memberships.forEach(c => {
+                    const div = document.createElement("div");
+                    div.textContent = `${c.committee_name}`;
+                    commTd.appendChild(div);
+                });
+            }
+            tr.appendChild(commTd);
+
+            frag.appendChild(tr);
+        }
+        tableBody.appendChild(frag);
+    }
+
+    function renderTermsTable() {
+        termsTableBody.innerHTML = "";
+        let allTerms = [];
+        for (const p of filteredData) {
+            if (Array.isArray(p.terms_in_office)) {
+                p.terms_in_office.forEach(t => allTerms.push({
+                    politician_id: p.id,
+                    politician_name: `${p.first_name} ${p.last_name}`,
+                    role: t.role, start_year: t.start_year, end_year: t.end_year
+                }));
+            }
+        }
+        allTerms.sort((a, b) => a.politician_id - b.politician_id || a.start_year - b.start_year);
+        termsCount.textContent = `(${allTerms.length} mandata)`;
+        if (allTerms.length === 0) {
+            termsTableBody.innerHTML = `<tr class="empty-row"><td colspan="5">Nema mandata.</td></tr>`;
+            return;
+        }
+        const frag = document.createDocumentFragment();
+        for (const t of allTerms) {
+            const tr = document.createElement("tr");
+            tr.appendChild(td(t.politician_id, "num"));
+            tr.appendChild(td(t.politician_name));
+            tr.appendChild(td(t.role));
+            tr.appendChild(td(t.start_year, "num"));
+            
+            const endTd = document.createElement("td");
+            endTd.className = "num";
+            if (t.end_year === null) {
+                const b = document.createElement("span"); b.className = "badge badge-yes"; b.textContent = "Trenutno";
+                endTd.appendChild(b);
+            } else { endTd.textContent = t.end_year; }
+            tr.appendChild(endTd);
+            frag.appendChild(tr);
+        }
+        termsTableBody.appendChild(frag);
+    }
+
+    function renderActionsTable() {
+        actionsTableBody.innerHTML = "";
+        let allActions = [];
+        for (const p of filteredData) {
+            if (Array.isArray(p.legislative_actions)) {
+                p.legislative_actions.forEach(a => allActions.push({
+                    politician_id: p.id,
+                    politician_name: `${p.first_name} ${p.last_name}`,
+                    title: a.title, action_type: a.action_type, year: a.year, status: a.status
+                }));
+            }
+        }
+        allActions.sort((a, b) => a.politician_id - b.politician_id || b.year - a.year);
+        actionsCount.textContent = `(${allActions.length} akata)`;
+        if (allActions.length === 0) {
+            actionsTableBody.innerHTML = `<tr class="empty-row"><td colspan="6">Nema akata.</td></tr>`;
+            return;
+        }
+        const frag = document.createDocumentFragment();
+        for (const a of allActions) {
+            const tr = document.createElement("tr");
+            tr.appendChild(td(a.politician_id, "num"));
+            tr.appendChild(td(a.politician_name));
+            tr.appendChild(td(a.title));
+            tr.appendChild(td(a.action_type));
+            tr.appendChild(td(a.year, "num"));
+            
+            const statusTd = document.createElement("td");
+            const b = document.createElement("span");
+            b.className = "badge badge-action";
+            b.textContent = a.status;
+            statusTd.appendChild(b);
+            tr.appendChild(statusTd);
+            
+            frag.appendChild(tr);
+        }
+        actionsTableBody.appendChild(frag);
+    }
+
+    function renderCommitteesTable() {
+        committeesTableBody.innerHTML = "";
+        let allComms = [];
+        for (const p of filteredData) {
+            if (Array.isArray(p.committee_memberships)) {
+                p.committee_memberships.forEach(c => allComms.push({
+                    politician_id: p.id,
+                    politician_name: `${p.first_name} ${p.last_name}`,
+                    committee_name: c.committee_name, role: c.role, 
+                    start_year: c.start_year, end_year: c.end_year
+                }));
+            }
+        }
+        allComms.sort((a, b) => a.politician_id - b.politician_id || a.start_year - b.start_year);
+        committeesCount.textContent = `(${allComms.length} članstava)`;
+        if (allComms.length === 0) {
+            committeesTableBody.innerHTML = `<tr class="empty-row"><td colspan="6">Nema članstava.</td></tr>`;
+            return;
+        }
+        const frag = document.createDocumentFragment();
+        for (const c of allComms) {
+            const tr = document.createElement("tr");
+            tr.appendChild(td(c.politician_id, "num"));
+            tr.appendChild(td(c.politician_name));
+            tr.appendChild(td(c.committee_name));
+            tr.appendChild(td(c.role));
+            tr.appendChild(td(c.start_year, "num"));
+            
+            const endTd = document.createElement("td");
+            endTd.className = "num";
+            if (c.end_year === null) {
+                const b = document.createElement("span"); b.className = "badge badge-committee"; b.textContent = "Trenutno";
+                endTd.appendChild(b);
+            } else { endTd.textContent = c.end_year; }
+            tr.appendChild(endTd);
+            
+            frag.appendChild(tr);
+        }
+        committeesTableBody.appendChild(frag);
+    }
+
+    function td(value, cls) {
+        const cell = document.createElement("td");
+        if (cls) cell.className = cls;
+        cell.textContent = value ?? "";
+        return cell;
+    }
+
+    function downloadFile(content, filename, mime) {
+        const blob = new Blob([content], { type: mime });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = filename; a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function flattenForExport(row) {
+        return {
+            id: row.id, first_name: row.first_name, last_name: row.last_name, birth_year: row.birth_year,
+            country: row.country, current_office: row.current_office, is_active: row.is_active,
+            education_level: row.education_level, official_website: row.official_website,
+            party_name: getPartyField(row, "party_name"), ideology: getPartyField(row, "ideology"),
+            roles_held: formatTermsString(row), legislative_actions: formatActionsString(row),
+            committee_memberships: formatCommitteesString(row)
+        };
+    }
+
+    document.getElementById("exportCsvBtn").addEventListener("click", () => {
+        if (filteredData.length === 0) return alert("Nema podataka.");
+        const flat = filteredData.map(flattenForExport);
+        const headers = Object.keys(flat[0]);
+        const rows = [headers.join(",")];
+        for (const row of flat) {
+            rows.push(headers.map(h => `"${(row[h] ?? "").toString().replace(/"/g, '""')}"`).join(","));
+        }
+        downloadFile("\uFEFF" + rows.join("\n"), "filtrirani_politicari.csv", "text/csv;charset=utf-8;");
+    });
+
+    document.getElementById("exportJsonBtn").addEventListener("click", () => {
+        if (filteredData.length === 0) return alert("Nema podataka.");
+        downloadFile(JSON.stringify(filteredData, null, 2), "filtrirani_politicari.json", "application/json");
+    });
+
+    searchInput.addEventListener("input", applyFilter);
+    attributeSelect.addEventListener("change", applyFilter);
+    clearBtn.addEventListener("click", () => {
+        searchInput.value = ""; attributeSelect.value = ""; applyFilter(); searchInput.focus();
+    });
+
+    loadData();
+</script>
+</body>
+</html>

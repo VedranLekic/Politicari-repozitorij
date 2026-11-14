@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="International politicians and public officials who have actively advocated for, authored, or sponsored law making aimed at regulating artificial intelligence.">
+    <meta name="author" content="Vedran Lekić">
+    <title>Politicians – Open Dataset on AI Regulation</title>
+    <style>
+        :root {
+            --primary: #1a5276;
+            --primary-light: #2e86c1;
+            --accent: #eaf2f8;
+            --text: #1c2833;
+            --muted: #5d6d7e;
+            --border: #d5dbdb;
+            --bg: #f8f9fa;
+            --card-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            --card-shadow-hover: 0 6px 20px rgba(26,82,118,0.15);
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; line-height: 1.65; color: var(--text); background: var(--bg); }
+        .site-header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+        .site-header .inner { max-width: 1050px; margin: 0 auto; padding: 0.9rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+        .brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; color: var(--primary); text-decoration: none; font-size: 1.15rem; }
+        .brand .logo { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 800; }
+        .nav { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .nav a { color: var(--primary); text-decoration: none; font-size: 0.92rem; padding: 0.4rem 0.8rem; border-radius: 6px; transition: background 0.15s; }
+        .nav a:hover { background: var(--accent); }
+        .hero { background: linear-gradient(135deg, #1a5276 0%, #2e86c1 100%); color: white; padding: 3.5rem 1.5rem 4rem; text-align: center; }
+        .hero .inner { max-width: 800px; margin: 0 auto; }
+        .hero h1 { font-size: 2.4rem; margin: 0 0 1rem; line-height: 1.2; }
+        .hero p { font-size: 1.1rem; opacity: 0.95; margin: 0 0 2rem; }
+        .hero .badges { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+        .hero .badge { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); padding: 0.35rem 0.9rem; border-radius: 999px; font-size: 0.85rem; }
+        main { max-width: 1050px; margin: -2.5rem auto 3rem; padding: 0 1.5rem; position: relative; }
+        .card { background: white; border-radius: 12px; padding: 2rem; box-shadow: var(--card-shadow); margin-bottom: 1.5rem; }
+        .card h2 { color: var(--primary); font-size: 1.4rem; margin: 0 0 1rem; padding-bottom: 0.6rem; border-bottom: 2px solid var(--accent); }
+        .card h3 { color: var(--primary); font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+        .card ul { padding-left: 1.3rem; margin: 0.4rem 0; }
+        .card li { margin-bottom: 0.3rem; }
+        code { background: var(--accent); color: var(--primary); padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.88em; font-family: "SF Mono", Consolas, monospace; }
+        .muted { color: var(--muted); font-size: 0.9rem; }
+        .downloads { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .dl-card { display: flex; flex-direction: column; gap: 0.5rem; padding: 1.2rem; border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); background: white; transition: all 0.2s ease; }
+        .dl-card:hover { border-color: var(--primary-light); box-shadow: var(--card-shadow-hover); transform: translateY(-2px); }
+        .dl-card .icon { font-size: 1.8rem; }
+        .dl-card .title { font-weight: 600; color: var(--primary); }
+        .dl-card .desc { font-size: 0.85rem; color: var(--muted); }
+        .dl-card.primary { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; border: none; }
+        .dl-card.primary .title, .dl-card.primary .desc { color: white; }
+        .schema-table { width: 100%; border-collapse: collapse; margin: 0.6rem 0 1rem; font-size: 0.9rem; }
+        .schema-table th, .schema-table td { border: 1px solid var(--border); padding: 0.55rem 0.8rem; text-align: left; vertical-align: top; }
+        .schema-table th { background: var(--accent); color: var(--primary); font-weight: 600; }
+        .schema-table tr:nth-child(even) td { background: #fcfcfc; }
+        footer { text-align: center; padding: 2rem 1.5rem; color: var(--muted); font-size: 0.88rem; border-top: 1px solid var(--border); background: white; }
+        footer a { color: var(--primary); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        @media (max-width: 600px) { .hero h1 { font-size: 1.7rem; } .hero { padding: 2.5rem 1rem 3rem; } main { padding: 0 1rem; margin-top: -1.5rem; } .card { padding: 1.3rem; } }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div class="inner">
+        <a class="brand" href="index.html"><span class="logo">P</span> Politicians</a>
+        <nav class="nav">
+            <a href="#about">O skupu</a>
+            <a href="#schema">Shema</a>
+            <a href="#download">Preuzmi</a>
+            <a href="datatable.html">📊 Tablica</a>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="inner">
+        <h1>Politicians &amp; AI Regulation</h1>
+        <p>Otvoreni skup podataka o međunarodnim političarima i javnim dužnosnicima koji su se zalagali za regulaciju umjetne inteligencije, zaštitu autorskih prava i uspostavljanje kontrola nad AI sustavima.</p>
+        <div class="badges">
+            <span class="badge">10 zapisa</span>
+            <span class="badge">CSV · JSON · SQL · JSON Schema</span>
+            <span class="badge">MIT licenca</span>
+        </div>
+    </div>
+</section>
+
+<main>
+    <article class="card" id="about">
+        <h2>O skupu podataka</h2>
+        <p>Skup podataka okuplja političare i javne dužnosnike koji su aktivno zagovarali, predlagali ili sponzorirali zakone usmjerene na regulaciju umjetne inteligencije, jačanje autorskopravne zaštite protiv treniranja modela te uspostavljanje kontrola i ravnoteže pri implementaciji AI sustava.</p>
+        <p class="muted">Jezik: engleski · Autor: Vedran Lekić · Licenca: MIT</p>
+    </article>
+
+    <article class="card" id="schema">
+        <h2>Struktura baze podataka</h2>
+        <p>Baza koristi relacijski model s četiri povezane tablice.</p>
+
+        <h3>1. <code>politicians</code> – matična tablica</h3>
+        <table class="schema-table">
+            <thead><tr><th>Stupac</th><th>Tip</th><th>Opis</th></tr></thead>
+            <tbody>
+                <tr><td><code>id</code></td><td>INTEGER (PK)</td><td>Jedinstveni identifikator</td></tr>
+                <tr><td><code>first_name</code></td><td>TEXT</td><td>Ime</td></tr>
+                <tr><td><code>last_name</code></td><td>TEXT</td><td>Prezime</td></tr>
+                <tr><td><code>birth_year</code></td><td>INTEGER</td><td>Godina rođenja</td></tr>
+                <tr><td><code>country</code></td><td>TEXT</td><td>Država</td></tr>
+                <tr><td><code>current_office</code></td><td>TEXT</td><td>Trenutna dužnost</td></tr>
+                <tr><td><code>is_active</code></td><td>INTEGER</td><td>Aktivan (1) ili neaktivan (0)</td></tr>
+                <tr><td><code>education_level</code></td><td>TEXT</td><td>Obrazovanje</td></tr>
+                <tr><td><code>official_website</code></td><td>TEXT</td><td>Web stranica</td></tr>
+                <tr><td><code>party_name</code></td><td>TEXT</td><td>Stranka</td></tr>
+                <tr><td><code>ideology</code></td><td>TEXT</td><td>Ideologija</td></tr>
+            </tbody>
+        </table>
+
+        <h3>2. <code>terms_in_office</code> – mandati</h3>
+        <table class="schema-table">
+            <thead><tr><th>Stupac</th><th>Tip</th><th>Opis</th></tr></thead>
+            <tbody>
+                <tr><td><code>id</code></td><td>INTEGER (PK)</td><td>ID mandata</td></tr>
+                <tr><td><code>politician_id</code></td><td>INTEGER (FK)</td><td>Referenca na političara</td></tr>
+                <tr><td><code>role</code></td><td>TEXT</td><td>Naziv dužnosti</td></tr>
+                <tr><td><code>start_year</code></td><td>INTEGER</td><td>Početak</td></tr>
+                <tr><td><code>end_year</code></td><td>INTEGER / NULL</td><td>Kraj</td></tr>
+            </tbody>
+        </table>
+
+        <h3>3. <code>legislative_actions</code> – zakonodavni akti</h3>
+        <table class="schema-table">
+            <thead><tr><th>Stupac</th><th>Tip</th><th>Opis</th></tr></thead>
+            <tbody>
+                <tr><td><code>id</code></td><td>INTEGER (PK)</td><td>ID akta</td></tr>
+                <tr><td><code>politician_id</code></td><td>INTEGER (FK)</td><td>Referenca na političara</td></tr>
+                <tr><td><code>title</code></td><td>TEXT</td><td>Naziv zakona/akta</td></tr>
+                <tr><td><code>action_type</code></td><td>TEXT</td><td>Vrsta akcije</td></tr>
+                <tr><td><code>year</code></td><td>INTEGER</td><td>Godina</td></tr>
+                <tr><td><code>status</code></td><td>TEXT</td><td>Status</td></tr>
+            </tbody>
+        </table>
+
+        <h3>4. <code>committee_memberships</code> – članstva u odborima</h3>
+        <table class="schema-table">
+            <thead><tr><th>Stupac</th><th>Tip</th><th>Opis</th></tr></thead>
+            <tbody>
+                <tr><td><code>id</code></td><td>INTEGER (PK)</td><td>ID članstva</td></tr>
+                <tr><td><code>politician_id</code></td><td>INTEGER (FK)</td><td>Referenca na političara</td></tr>
+                <tr><td><code>committee_name</code></td><td>TEXT</td><td>Naziv odbora</td></tr>
+                <tr><td><code>role</code></td><td>TEXT</td><td>Uloga u odboru</td></tr>
+                <tr><td><code>start_year</code></td><td>INTEGER</td><td>Godina početka</td></tr>
+                <tr><td><code>end_year</code></td><td>INTEGER / NULL</td><td>Godina kraja</td></tr>
+            </tbody>
+        </table>
+    </article>
+
+    <article class="card" id="download">
+        <h2>Pristup podacima</h2>
+        <p>Skup podataka dostupan je u više formata – od ljudski čitljivog CSV-a do strojno čitljivog JSON-a i JSON Scheme.</p>
+        <div class="downloads">
+            <a class="dl-card" href="politicians.csv" download>
+                <span class="icon">📄</span>
+                <span class="title">CSV</span>
+                <span class="desc">Poravnati zapisi za tablične alate</span>
+            </a>
+            <a class="dl-card" href="politicians.json" download>
+                <span class="icon">🧩</span>
+                <span class="title">JSON</span>
+                <span class="desc">Ugniježđena struktura</span>
+            </a>
+            <a class="dl-card" href="politicians_dump.sql" download>
+                <span class="icon">🗄️</span>
+                <span class="title">SQL dump</span>
+                <span class="desc">Shema i podaci za SQLite</span>
+            </a>
+            <a class="dl-card" href="schema.json">
+                <span class="icon">🧾</span>
+                <span class="title">JSON Schema</span>
+                <span class="desc">Strojno čitljiv opis strukture</span>
+            </a>
+            <a class="dl-card primary" href="datatable.html">
+                <span class="icon">📊</span>
+                <span class="title">Interaktivna tablica</span>
+                <span class="desc">Filtriranje i izvoz uživo</span>
+            </a>
+        </div>
+    </article>
+</main>
+
+<footer>
+    <p>© 2026 Vedran Lekić · Licenca MIT · <a href="https://github.com/VedranLekic/Politicari-repozitorij" target="_blank" rel="noopener">GitHub repozitorij</a></p>
+</footer>
+
+</body>
+</html>

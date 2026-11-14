@@ -1,0 +1,72 @@
+{
+  "$id": "https://raw.githubusercontent.com/VedranLekic/Politicari-repozitorij/main/schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Politicians dataset",
+  "description": "International politicians and public officials who have actively advocated for, authored, or sponsored law making aimed at regulating artificial intelligence.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "title": "Politician",
+    "properties": {
+      "id": { "type": "integer" },
+      "first_name": { "type": "string" },
+      "last_name": { "type": "string" },
+      "birth_year": { "type": "integer" },
+      "country": { "type": "string" },
+      "current_office": { "type": "string" },
+      "is_active": { "type": "integer", "enum": [0, 1] },
+      "education_level": { "type": "string" },
+      "official_website": { "type": "string", "format": "uri" },
+      "party_affiliation": {
+        "type": "object",
+        "properties": {
+          "party_name": { "type": "string" },
+          "ideology": { "type": "string" }
+        },
+        "required": ["party_name", "ideology"]
+      },
+      "terms_in_office": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "role": { "type": "string" },
+            "start_year": { "type": "integer" },
+            "end_year": { "type": ["integer", "null"] }
+          },
+          "required": ["role", "start_year", "end_year"]
+        }
+      },
+      "legislative_actions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" },
+            "action_type": { "type": "string" },
+            "year": { "type": "integer" },
+            "status": { "type": "string" }
+          },
+          "required": ["title", "action_type", "year", "status"]
+        }
+      },
+      "committee_memberships": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "committee_name": { "type": "string" },
+            "role": { "type": "string" },
+            "start_year": { "type": "integer" },
+            "end_year": { "type": ["integer", "null"] }
+          },
+          "required": ["committee_name", "role", "start_year", "end_year"]
+        }
+      }
+    },
+    "required": [
+      "id", "first_name", "last_name", "birth_year", "country", 
+      "is_active", "party_affiliation", "terms_in_office", "legislative_actions", "committee_memberships"
+    ]
+  }
+}
